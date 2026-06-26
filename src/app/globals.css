@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@theme {
+  --color-warm-beige: #F9F6F0;
+  --color-soft-cream: #F5F0E6;
+  --color-warm-white: #FFFFFF;
+  --color-muted-brown: #6D5F54;
+  --color-charcoal: #2A2A2A;
+  --color-subtle-gold: #C5A880;
+  
+  --font-sans: "Geist", "Inter", sans-serif;
+  
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-fade-in: fadeIn 0.8s ease-out forwards;
+  --animate-pulse-slow: pulseSlow 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseSlow {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+
+html, body {
+  background-color: #F9F6F0;
+  color: #2A2A2A;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* Custom selection styling */
+::selection {
+  background-color: #C5A880;
+  color: #2A2A2A;
+}
+
+/* Hide scrollbar for clean aesthetics, keeping functionality */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F9F6F0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #6D5F54;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C5A880;
+}
+
+/* Custom line clamps and animations */
+.text-balance {
+  text-wrap: balance;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+/* Custom noise overlay background for premium print effect */
+.noise-bg {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
+}
