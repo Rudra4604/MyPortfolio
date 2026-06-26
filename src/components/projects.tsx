@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Shield, Brain, Sparkles, Database, FileCode } from "lucide-react";
+import { ArrowUpRight, Shield, Brain, Sparkles, Database, FileCode, Check } from "lucide-react";
 import CaseStudy from "./case-study";
 
 export default function Projects() {
@@ -20,22 +21,38 @@ export default function Projects() {
     {
       id: "secureu",
       title: "SecureU — Cybersecurity Scanner & AI Threat Assistant",
-      tag: "Featured",
+      tag: "Featured Case Study",
+      valueProp: "A production-ready compliance scanner and AI-powered vulnerability assistant.",
       categories: ["security", "ai", "web"],
       description: "A production-ready web security compliance audit platform. Combines SSL socket handshake validation and passive heuristic script crawling with a Logistic Regression classifier to detect threat vectors. Features a context-aware LLaMA 3.3 chatbot via Groq API for remediation help.",
       tech: ["Python", "Flask", "Scikit-Learn", "Groq LLaMA 3.3", "Bootstrap 5"],
+      metrics: [
+        "ML-powered threat detection",
+        "SSL/TLS socket auditing",
+        "AI security assistant integration",
+        "Automated compliance scanning"
+      ],
       icon: Shield,
       featured: true,
+      image: "/secureu_screenshot.png"
     },
     {
       id: "aurabeauty",
       title: "AuraBeauty AI — Salon Discovery & Advisor",
-      tag: "Featured",
+      tag: "Featured Case Study",
+      valueProp: "Intelligent salon marketplace and bridal planner optimizing client booking journeys.",
       categories: ["ai", "web"],
       description: "A premium marketplace providing personalized salon discovery in Ahmedabad. Leverages skin/hair parameter AI advice, a proprietary hygiene-evaluation algorithm (Aura Score), dynamic bridal treatments scheduling calendars, and admin charts dashboards.",
       tech: ["Next.js 15", "TypeScript", "Tailwind CSS", "Framer Motion"],
+      metrics: [
+        "AI beauty advisor profiling",
+        "Personalized recommendations",
+        "Aura Score marketplace trust",
+        "Dynamic booking workflows"
+      ],
       icon: Sparkles,
       featured: true,
+      image: "/aurabeauty_screenshot.png"
     },
     {
       id: "satellite",
@@ -73,6 +90,15 @@ export default function Projects() {
     (project) => activeCategory === "all" || project.categories.includes(activeCategory)
   );
 
+  const getCategoryLabel = (catId: string) => {
+    switch (catId) {
+      case "security": return "Cybersecurity";
+      case "ai": return "AI & ML";
+      case "web": return "Web Architecture";
+      default: return catId;
+    }
+  };
+
   return (
     <section id="projects" className="py-24 bg-soft-cream/30 border-t border-b border-muted-brown/10 relative">
       <div className="max-w-6xl mx-auto px-6">
@@ -106,11 +132,10 @@ export default function Projects() {
         </div>
 
         {/* Featured Projects Grid */}
-        <div className="grid grid-cols-1 gap-12 mb-16">
+        <div className="grid grid-cols-1 gap-16 mb-16">
           {filteredProjects
             .filter((p) => p.featured)
             .map((project) => {
-              const Icon = project.icon;
               return (
                 <motion.div
                   key={project.id}
@@ -119,29 +144,49 @@ export default function Projects() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6 }}
-                  className="group relative grid grid-cols-1 lg:grid-cols-12 gap-8 p-8 sm:p-10 bg-warm-white border border-muted-brown/15 rounded-3xl shadow-sm hover:shadow-md hover:border-muted-brown/25 transition-all duration-300"
+                  className="group relative grid grid-cols-1 lg:grid-cols-12 gap-8 p-8 sm:p-10 bg-warm-white border border-muted-brown/15 rounded-3xl shadow-sm hover:shadow-md hover:border-muted-brown/25 transition-all duration-300 overflow-hidden"
                 >
                   <div className="lg:col-span-7 flex flex-col justify-between space-y-6">
                     <div className="space-y-4">
                       {/* Top Header */}
-                      <div className="flex items-center gap-3">
+                      <div className="flex flex-wrap items-center gap-2">
                         <span className="text-xs font-bold uppercase tracking-wider text-subtle-gold bg-soft-cream/60 px-3 py-1 rounded">
                           {project.tag}
                         </span>
-                        <div className="w-1.5 h-1.5 rounded-full bg-muted-brown/30" />
-                        <span className="text-xs text-charcoal/50 font-sans font-medium">Case Study Available</span>
+                        {project.categories.map((cat) => (
+                          <span key={cat} className="text-[10px] uppercase font-semibold text-charcoal/40 border border-muted-brown/10 px-2 py-0.5 rounded font-sans">
+                            {getCategoryLabel(cat)}
+                          </span>
+                        ))}
                       </div>
 
-                      <h3 className="text-xl sm:text-2xl font-bold text-charcoal leading-tight group-hover:text-muted-brown transition-colors">
+                      <h3 className="text-2xl sm:text-3xl font-bold text-charcoal leading-tight group-hover:text-muted-brown transition-colors">
                         {project.title}
                       </h3>
+                      
+                      <p className="text-sm font-semibold text-muted-brown/90 italic font-sans leading-relaxed">
+                        &ldquo;{project.valueProp}&rdquo;
+                      </p>
+                      
                       <p className="text-sm text-charcoal/70 leading-relaxed font-sans">
                         {project.description}
                       </p>
+
+                      {/* Quick Metrics Section */}
+                      <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 border-t border-muted-brown/5">
+                        {project.metrics?.map((metric, mIdx) => (
+                          <div key={mIdx} className="flex items-center gap-2 text-xs text-charcoal/75 font-sans font-medium">
+                            <div className="p-0.5 rounded-full bg-subtle-gold/10 text-subtle-gold">
+                              <Check className="w-3.5 h-3.5" />
+                            </div>
+                            <span>{metric}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
 
                     {/* Tech & Action */}
-                    <div className="space-y-4">
+                    <div className="space-y-4 pt-4">
                       <div className="flex flex-wrap gap-2">
                         {project.tech.map((t, idx) => (
                           <span
@@ -163,16 +208,15 @@ export default function Projects() {
                     </div>
                   </div>
 
-                  <div className="lg:col-span-5 flex items-center justify-center bg-soft-cream/25 rounded-2xl border border-muted-brown/5 p-8 relative overflow-hidden group-hover:bg-soft-cream/45 transition-colors duration-300 min-h-[220px]">
-                    <div className="absolute inset-0 bg-gradient-to-tr from-warm-beige/30 to-transparent pointer-events-none" />
-                    <div className="text-center space-y-4 z-10 flex flex-col items-center">
-                      <div className="w-16 h-16 rounded-full bg-warm-white border border-muted-brown/10 shadow-sm flex items-center justify-center text-subtle-gold group-hover:scale-110 transition-transform duration-300">
-                        <Icon className="w-8 h-8" />
-                      </div>
-                      <span className="text-xs uppercase tracking-widest text-charcoal/40 font-bold block">
-                        {project.id === "secureu" ? "Security Compliance Audit" : "Personalized Recommendation Engine"}
-                      </span>
-                    </div>
+                  {/* Right Side Visual Block: Real Image Screenshot */}
+                  <div className="lg:col-span-5 relative rounded-2xl border border-muted-brown/10 overflow-hidden shadow-sm aspect-video sm:aspect-auto min-h-[260px] group-hover:border-muted-brown/20 transition-all duration-300">
+                    <Image
+                      src={project.image || ""}
+                      alt={project.title}
+                      fill
+                      className="object-cover object-top group-hover:scale-[1.03] transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-charcoal/30 via-transparent to-transparent pointer-events-none" />
                   </div>
                 </motion.div>
               );
@@ -200,7 +244,7 @@ export default function Projects() {
                       <div className="p-2 rounded-lg bg-soft-cream/40 border border-muted-brown/5 text-subtle-gold">
                         <Icon className="w-5 h-5" />
                       </div>
-                      <span className="text-xs font-semibold text-charcoal/40 uppercase tracking-widest">
+                      <span className="text-xs font-semibold text-charcoal/40 uppercase tracking-widest font-sans">
                         {project.tag}
                       </span>
                     </div>
