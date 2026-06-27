@@ -63,8 +63,8 @@ Make sure you have Node.js (v18+) and npm installed.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Rudra4604/MyPortfolio1.git
-   cd MyPortfolio1
+   git clone https://github.com/Rudra4604/MyPortfolio.git
+   cd MyPortfolio
    ```
 
 2. Install dependencies:
