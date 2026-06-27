@@ -76,3 +76,70 @@ html, body {
 .noise-bg {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
 }
+
+/* Custom Cursor styling to hide default cursor on desktop devices with pointer capabilities */
+@media (min-width: 1024px) and (pointer: fine) {
+  .custom-cursor-active,
+  .custom-cursor-active * {
+    cursor: none !important;
+  }
+  
+  /* Restore the text I-beam cursor for inputs, textareas, and contenteditable elements */
+  .custom-cursor-active input[type="text"],
+  .custom-cursor-active input[type="email"],
+  .custom-cursor-active input[type="search"],
+  .custom-cursor-active input[type="tel"],
+  .custom-cursor-active input[type="url"],
+  .custom-cursor-active input[type="number"],
+  .custom-cursor-active textarea,
+  .custom-cursor-active [contenteditable="true"],
+  .custom-cursor-active [contenteditable="true"] * {
+    cursor: text !important;
+  }
+
+  /* Premium hover states for interactive components */
+  /* Buttons: lift by 2px, shadow increase, smooth transition */
+  .custom-cursor-active button,
+  .custom-cursor-active a.rounded-full,
+  .custom-cursor-active a.rounded-xl,
+  .custom-cursor-active a.inline-flex[class*="bg-charcoal"],
+  .custom-cursor-active a.inline-flex[class*="bg-warm-white"] {
+    transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  }
+  .custom-cursor-active button:hover,
+  .custom-cursor-active a.rounded-full:hover,
+  .custom-cursor-active a.rounded-xl:hover,
+  .custom-cursor-active a.inline-flex[class*="bg-charcoal"]:hover,
+  .custom-cursor-active a.inline-flex[class*="bg-warm-white"]:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 16px rgba(109, 95, 84, 0.12) !important;
+  }
+  .custom-cursor-active button:active,
+  .custom-cursor-active a.rounded-full:active,
+  .custom-cursor-active a.rounded-xl:active {
+    transform: translateY(0px) scale(0.98) !important;
+    box-shadow: 0 2px 4px rgba(109, 95, 84, 0.08) !important;
+  }
+
+  /* Project Cards: lift by 4px, stronger shadow, border accent, smooth 200ms transition */
+  .custom-cursor-active .group.relative.grid {
+    transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.2s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.2s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  }
+  .custom-cursor-active .group.relative.grid:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 16px 32px rgba(109, 95, 84, 0.12) !important;
+    border-color: rgba(197, 168, 128, 0.3) !important; /* gold border accent */
+  }
+}
+
+/* Force standard browser cursor back on touch devices, small screens, or when prefers-reduced-motion is active */
+@media (max-width: 1023px), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor-none,
+  [class*="cursor-none"] {
+    cursor: auto !important;
+  }
+  a, button, [role="button"], select, input[type="button"], input[type="submit"] {
+    cursor: pointer !important;
+  }
+}
+

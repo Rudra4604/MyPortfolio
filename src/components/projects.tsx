@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Shield, Brain, Sparkles, Database, FileCode, Check } from "lucide-react";
+import { Shield, Brain, Sparkles, Database, FileCode, ArrowUpRight } from "lucide-react";
 import CaseStudy from "./case-study";
+import ProjectCard from "./project-card";
 
 export default function Projects() {
   const [activeCategory, setActiveCategory] = useState("all");
@@ -24,17 +24,20 @@ export default function Projects() {
       tag: "Featured Case Study",
       valueProp: "A production-ready compliance scanner and AI-powered vulnerability assistant.",
       categories: ["security", "ai", "web"],
-      description: "A production-ready web security compliance audit platform. Combines SSL socket handshake validation and passive heuristic script crawling with a Logistic Regression classifier to detect threat vectors. Features a context-aware LLaMA 3.3 chatbot via Groq API for remediation help.",
-      tech: ["Python", "Flask", "Scikit-Learn", "Groq LLaMA 3.3", "Bootstrap 5"],
+      description: "AI-powered cybersecurity auditing platform that scans websites for SSL, compliance, and security vulnerabilities while providing intelligent remediation through an integrated AI assistant.",
+      tech: ["Python", "Flask", "Scikit-Learn", "Groq", "Bootstrap", "MySQL"],
       metrics: [
-        "ML-powered threat detection",
-        "SSL/TLS socket auditing",
-        "AI security assistant integration",
-        "Automated compliance scanning"
+        "AI Threat Detection",
+        "SSL/TLS Validation",
+        "AI Assistant",
+        "Compliance Scanner"
       ],
       icon: Shield,
       featured: true,
-      image: "/secureu_screenshot.png"
+      image: "/projects/secureu.webp",
+      githubUrl: "https://github.com/Rudra4604/SecureU",
+      websiteUrl: "https://secure-u.vercel.app/",
+      projectUrl: "/projects/secureu"
     },
     {
       id: "aurabeauty",
@@ -42,17 +45,20 @@ export default function Projects() {
       tag: "Featured Case Study",
       valueProp: "Intelligent salon marketplace and bridal planner optimizing client booking journeys.",
       categories: ["ai", "web"],
-      description: "A premium marketplace providing personalized salon discovery in Ahmedabad. Leverages skin/hair parameter AI advice, a proprietary hygiene-evaluation algorithm (Aura Score), dynamic bridal treatments scheduling calendars, and admin charts dashboards.",
+      description: "AI-powered beauty advisor and salon booking platform optimizing client booking journeys. Leverages a proprietary hygiene-evaluation algorithm (Aura Score) and skin/hair profiling to provide personalized discovery and scheduling.",
       tech: ["Next.js 15", "TypeScript", "Tailwind CSS", "Framer Motion"],
       metrics: [
-        "AI beauty advisor profiling",
-        "Personalized recommendations",
-        "Aura Score marketplace trust",
-        "Dynamic booking workflows"
+        "AI Beauty Advisor",
+        "Personalized Profiling",
+        "Aura Score Trust System",
+        "Dynamic Booking Engine"
       ],
       icon: Sparkles,
       featured: true,
-      image: "/aurabeauty_screenshot.png"
+      image: "/projects/aurabeautyai.webp",
+      githubUrl: "https://github.com/Rudra4604/AuraBeautyAI",
+      websiteUrl: "https://aurabeauty.demo",
+      projectUrl: "/projects/aurabeauty-ai"
     },
     {
       id: "satellite",
@@ -63,6 +69,9 @@ export default function Projects() {
       tech: ["Python", "Neural Networks", "NumPy", "OpenCV"],
       icon: Brain,
       featured: false,
+      githubUrl: "https://github.com/Rudra4604/Satellite-Image-Classifier",
+      websiteUrl: "https://github.com/Rudra4604",
+      projectUrl: "/projects/satellite"
     },
     {
       id: "electricity",
@@ -73,6 +82,9 @@ export default function Projects() {
       tech: ["Python", "Pandas", "Scikit-Learn", "Matplotlib"],
       icon: Database,
       featured: false,
+      githubUrl: "https://github.com/Rudra4604/Electricity-Unit-Generator-Predictor",
+      websiteUrl: "https://github.com/Rudra4604",
+      projectUrl: "/projects/electricity"
     },
     {
       id: "solar",
@@ -83,6 +95,9 @@ export default function Projects() {
       tech: ["Python", "SciPy", "Matplotlib"],
       icon: FileCode,
       featured: false,
+      githubUrl: "https://github.com/Rudra4604/Solar-Position-Efficiency-Modeler",
+      websiteUrl: "https://github.com/Rudra4604",
+      projectUrl: "/projects/solar"
     },
   ];
 
@@ -137,88 +152,17 @@ export default function Projects() {
             .filter((p) => p.featured)
             .map((project) => {
               return (
-                <motion.div
+                <ProjectCard
                   key={project.id}
-                  layout
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
-                  className="group relative grid grid-cols-1 lg:grid-cols-12 gap-8 p-8 sm:p-10 bg-warm-white border border-muted-brown/15 rounded-3xl shadow-sm hover:shadow-md hover:border-muted-brown/25 transition-all duration-300 overflow-hidden"
-                >
-                  <div className="lg:col-span-7 flex flex-col justify-between space-y-6">
-                    <div className="space-y-4">
-                      {/* Top Header */}
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-xs font-bold uppercase tracking-wider text-subtle-gold bg-soft-cream/60 px-3 py-1 rounded">
-                          {project.tag}
-                        </span>
-                        {project.categories.map((cat) => (
-                          <span key={cat} className="text-[10px] uppercase font-semibold text-charcoal/40 border border-muted-brown/10 px-2 py-0.5 rounded font-sans">
-                            {getCategoryLabel(cat)}
-                          </span>
-                        ))}
-                      </div>
-
-                      <h3 className="text-2xl sm:text-3xl font-bold text-charcoal leading-tight group-hover:text-muted-brown transition-colors">
-                        {project.title}
-                      </h3>
-                      
-                      <p className="text-sm font-semibold text-muted-brown/90 italic font-sans leading-relaxed">
-                        &ldquo;{project.valueProp}&rdquo;
-                      </p>
-                      
-                      <p className="text-sm text-charcoal/70 leading-relaxed font-sans">
-                        {project.description}
-                      </p>
-
-                      {/* Quick Metrics Section */}
-                      <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 border-t border-muted-brown/5">
-                        {project.metrics?.map((metric, mIdx) => (
-                          <div key={mIdx} className="flex items-center gap-2 text-xs text-charcoal/75 font-sans font-medium">
-                            <div className="p-0.5 rounded-full bg-subtle-gold/10 text-subtle-gold">
-                              <Check className="w-3.5 h-3.5" />
-                            </div>
-                            <span>{metric}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Tech & Action */}
-                    <div className="space-y-4 pt-4">
-                      <div className="flex flex-wrap gap-2">
-                        {project.tech.map((t, idx) => (
-                          <span
-                            key={idx}
-                            className="px-2.5 py-1 text-xs rounded-md bg-soft-cream/45 border border-muted-brown/5 text-charcoal/80 font-sans font-medium"
-                          >
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-
-                      <button
-                        onClick={() => setSelectedCaseStudy(project.id as "secureu" | "aurabeauty")}
-                        className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-charcoal hover:text-muted-brown cursor-none pt-2"
-                      >
-                        Read Full Case Study
-                        <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Right Side Visual Block: Real Image Screenshot */}
-                  <div className="lg:col-span-5 relative rounded-2xl border border-muted-brown/10 overflow-hidden shadow-sm aspect-video sm:aspect-auto min-h-[260px] group-hover:border-muted-brown/20 transition-all duration-300">
-                    <Image
-                      src={project.image || ""}
-                      alt={project.title}
-                      fill
-                      className="object-cover object-top group-hover:scale-[1.03] transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-charcoal/30 via-transparent to-transparent pointer-events-none" />
-                  </div>
-                </motion.div>
+                  title={project.title}
+                  description={project.description}
+                  features={project.metrics || []}
+                  technologies={project.tech || []}
+                  githubUrl={project.githubUrl || "https://github.com/Rudra4604"}
+                  websiteUrl={project.websiteUrl}
+                  onViewProject={() => setSelectedCaseStudy(project.id as "secureu" | "aurabeauty")}
+                  image={project.image}
+                />
               );
             })}
         </div>
@@ -269,15 +213,17 @@ export default function Projects() {
                       ))}
                     </div>
                     
-                    <a
-                      href="https://github.com/Rudra4604"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-charcoal/70 hover:text-charcoal cursor-none"
-                    >
-                      View Repository
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </a>
+                    {project.githubUrl && (
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-charcoal/70 hover:text-charcoal cursor-none"
+                      >
+                        View Repository
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </a>
+                    )}
                   </div>
                 </motion.div>
               );
